@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        background-color: #121212; /* Dark Spotify-style background */
+        color: #FFFFFF; /* Light text color */
+        font-family: Arial, sans-serif;
+    }
+
+    .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #1E1E1E; /* Slightly lighter than background for contrast */
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .login-container h1 {
+        text-align: center;
+        color: #1DB954; /* Spotify Green */
+        margin-bottom: 20px;
+    }
+
+    .login-form .form-control {
+        background-color: #2C2C2C; /* Input background */
+        color: #FFFFFF; /* Input text */
+        border: 1px solid #444; /* Subtle border */
+        border-radius: 5px;
+    }
+
+    .login-form .form-control:focus {
+        border-color: #1DB954; /* Green border on focus */
+        box-shadow: 0 0 5px #1DB954;
+    }
+
+    .login-form .btn-success {
+        background-color: #1DB954; /* Spotify Green */
+        border: none;
+        color: #FFFFFF;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .login-form .btn-success:hover {
+        background-color: #1ED760; /* Slightly lighter green for hover */
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 15px;
+        color: #B3B3B3; /* Lighter gray for secondary text */
+    }
+
+    .login-link a {
+        color: #1DB954;
+        text-decoration: none;
+    }
+
+    .login-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+<div class="login-container">
+    <h1>Login To See Album</h1>
+    <form method="post" class="login-form">
+        {{ form.username(class="form-control mt-2", placeholder="Username") }}
+        {{ form.password(class="form-control mt-2", placeholder="Password") }}
+        {{ form.submit(class="form-control mt-2 bg-warning") }}
+    </form>
+    <p class="login-link">
+        Already have an account? <a href="/album_register">Login Instead</a>
+    </p>
+</div>
+{% endblock %}

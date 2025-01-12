@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        background-color: #121212;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        }
+    h1 {
+        color: #1db954;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        }
+    .albums, .top-tracks {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        }
+    .albumclass {
+        display: flex;
+        flex-wrap: wrap;  /* Allows wrapping of items */
+        gap: 20px;  /* Space between items */
+        justify-content: space-evenly;  /* Center albums horizontally */
+        }
+    .album {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 22%;
+        height: 250px;
+        text-align: center;
+        }
+    .track {
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+        height: 30px;
+        margin-left: 20px;
+        }
+    img {
+        width: 200px;
+        object-fit: cover;  /* Ensure the image scales correctly */
+        }
+    a {
+        color: white;
+        text-decoration: none;
+        }
+    .img-tracks{
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      gap: 90px;
+    }
+    .artist_image{
+      width: 300px;
+      object-fit: cover;
+    }
+</style>
+<body>
+
+<h1>{{ name }}</h1>
+
+<div class="img-tracks">
+    <img src="{{img}}" alt="" class="artist_image">
+
+    <div class="top-tracks">
+      <h2>Top Tracks</h2>
+      {% for track in tracks %}
+      <div class="track">
+          <p>   - {{ track.name }}</p>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+
+<div class="albums" style="margin-bottom: 20px;">
+    <h2>Albums</h2>
+    {% if current_user.is_authenticated %}
+    <div class="albumclass">
+    {% for album in albums %}
+    <a class="album" href="/album/{{album.id}}">
+      <img src="{{ album.images[0].url }}" alt="{{ album.name }}">
+      <p>{{ album.name }}</p>
+    </a>
+    {% endfor %}
+
+    </div>
+    {% else %}
+    <div class="albumclass">
+    {% for album in albums %}
+    <a class="album" href="/album_register">
+      <img src="{{ album.images[0].url }}" alt="{{ album.name }}">
+      <p>{{ album.name }}</p>
+    </a>
+    {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+</body>
+{% endblock %}
