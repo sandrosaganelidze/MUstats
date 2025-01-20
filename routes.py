@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, flash
+from flask import render_template, request, redirect
 from forms import *
 import requests
 from configs import *
@@ -82,7 +82,6 @@ def register():
         user = User(username=form.username.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('registered')
         return redirect("/login")
     return render_template('register.html', form=form)
 
@@ -94,7 +93,6 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and check_password_hash(user.password, form.password.data):
             login_user(user)
-            flash('logged in')
             return redirect("/artists")
     return render_template('login.html', form=form)
 
@@ -102,7 +100,6 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
-    flash("logged out")
     return redirect("/")
 
 
@@ -139,14 +136,6 @@ def artist_page(artist_id):
     return render_template("artist.html", albums=albums, tracks=top_tracks, name=artist_name, img=artist_img)
 
 
-@app.route("/check_login")
-def album_redirect():
-    if current_user.is_authenticated:
-        return redirect("/album/<album_id>")
-    else:
-        return redirect("/album_register")
-
-
 @app.route("/album_register", methods=["GET", "POST"])
 def album_register():
     form = AlbumRegisterForm()
@@ -154,7 +143,6 @@ def album_register():
         user = User(username=form.username.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('registered')
         return redirect("/login")
     return render_template('album_register.html', form=form)
 
@@ -166,7 +154,6 @@ def album_login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and check_password_hash(user.password, form.password.data):
             login_user(user)
-            flash('logged in')
             return redirect("/artists")
     return render_template('album_login.html', form=form)
 
